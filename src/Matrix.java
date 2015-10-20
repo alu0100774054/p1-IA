@@ -68,10 +68,10 @@ public class Matrix extends JFrame {
 			v.insertElementAt(aux, i);
 		}
 		v.sort(null);
-		RellenarAleatorios(v);
+		RellenarObstaculos(v);
 	}
 
-	private void RellenarAleatorios(Vector<Integer> v) {
+	private void RellenarObstaculos(Vector<Integer> v) {
 		// TODO Auto-generated method stub
 		
 		int	i = 0,k=0;
@@ -97,9 +97,8 @@ public class Matrix extends JFrame {
 		// TODO Auto-generated method stub
 		String porcentajeInput = JOptionPane.showInputDialog("Porcentaje de Obstaculos");
 		int porcentaje = Integer.parseInt(porcentajeInput);
-		int total = tamanyo();
-		int nObstaculos = (porcentaje*tamanyo())/100;
-		GeneraAleatorio(nObstaculos);
+		int nObstaculos = ((porcentaje*tamanyo())/100);
+		GenerarVector(nObstaculos);
 	}
 	
 	private class ManejadorRaton implements MouseListener,MouseMotionListener
