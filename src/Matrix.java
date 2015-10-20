@@ -1,6 +1,5 @@
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.Random;
 
 import javax.swing.*;
@@ -16,11 +15,12 @@ public class Matrix extends JFrame {
 		COLUMNAS = c;
 		isRandom=b;
 
+		//creamos la matrix
 		if (isRandom == true) {
 			String porcentajeInput = JOptionPane.showInputDialog("Número de Obstaculos");
 			int porcentaje = Integer.parseInt(porcentajeInput);
 			getContentPane().setLayout(new GridLayout(FILAS,COLUMNAS));
-			ImageIcon aux,aux2;
+			ImageIcon aux,aux2,aux3;
 			Random aleatorio = new Random();
 			int vectorObstaculosI[] = new int[porcentaje];
 			int vectorObstaculosJ[] = new int[porcentaje];
@@ -33,13 +33,18 @@ public class Matrix extends JFrame {
 				posicion=aleatorio.nextInt(COLUMNAS);
 				vectorObstaculosJ[i]=posicion;
 			}
-			aux=new ImageIcon("/Users/erikbv99421/Documents/workspace/robot/Icons/foto-cara.png"); //fondo del mapa
-			aux2=new ImageIcon("/Users/erikbv99421/Documents/workspace/robot/foto-cara2.png");	//obstaculos
+			aux=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/arena.png"); //fondo del mapa
+			aux2=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/obstaculo.png");	//obstaculo
+			aux3=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/robot.png");	//robot
 			//creamos el mapa
 			int k=0;
 			for (int i=0;i<FILAS;i++)
 				for (int j=0;j<COLUMNAS;j++)
 				{
+					if ((i==1)&&(j==3)) {
+						JLabel picRobot = new JLabel(aux3);
+						getContentPane().add(picRobot);
+					}
 					if ((vectorObstaculosI[k]==i)&&(vectorObstaculosJ[k]==j)) {
 						JLabel picbomba = new JLabel(aux2);
 						getContentPane().add(picbomba);
@@ -48,34 +53,84 @@ public class Matrix extends JFrame {
 					JLabel piclabel = new JLabel(aux);
 					getContentPane().add(piclabel);
 				}
-			
+
 			pack();
 			setVisible(true);
-			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			
+			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
 		} else {
 			//falta el manual
 			getContentPane().setLayout(new GridLayout(FILAS,COLUMNAS));
-			ImageIcon aux,aux2;
+			ImageIcon aux,aux2,aux3;
+			aux=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/arena.png"); //fondo del mapa
+			aux2=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/obstaculo.png");	//obstaculo
+			aux3=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/robot.png");	//robot
 			for (int i=0;i<FILAS;i++)
 				for (int j=0;j<COLUMNAS;j++)
 				{
-					aux=new ImageIcon("/Users/erikbv99421/Documents/workspace/robot/Icons/foto-cara.png");
-					if(i==j){
-						aux2=new ImageIcon("/Users/erikbv99421/Documents/workspace/robot/foto-cara2.png");
-						JLabel picbomba = new JLabel(aux2);
-						getContentPane().add(picbomba);
+					if ((i==1)&&(j==3)) {
+						JLabel picRobot = new JLabel(aux3);
+						getContentPane().add(picRobot);
 					}
 					JLabel piclabel = new JLabel(aux);
 					getContentPane().add(piclabel);
 				}
+			ManejadorRaton manejador = new ManejadorRaton();
+			addMouseListener(manejador);
+			addMouseMotionListener(manejador);
+
 			pack();
 			setVisible(true);
-			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			
+			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
 		}
 	}
+	private class ManejadorRaton implements MouseListener,MouseMotionListener
+	{
 
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			setElemento(e.getX(), e.getY());
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			setElemento(e.getX(), e.getY());
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 	public int getFilas() {
 		return FILAS;
 	}
@@ -93,5 +148,16 @@ public class Matrix extends JFrame {
 	}
 	public void setRandom(boolean b) {
 		isRandom = b;
+	}
+	public void setElemento(int X, int Y){
+		for (int i=0;i<FILAS;i++)
+			for (int j=0;j<COLUMNAS;j++)
+			{
+				if ((i==X)&&(j==Y)) {
+					ImageIcon aux2=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/obstaculo.png");	//obstaculo
+					JLabel picbomba = new JLabel(aux2);
+					getContentPane().add(picbomba);
+				}
+			}
 	}
 }
