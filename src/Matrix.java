@@ -1,59 +1,36 @@
 import java.awt.*;
+
 import java.awt.event.*;
+import java.lang.reflect.Array;
+import java.util.Collection;
 import java.util.Random;
+import java.util.Vector;
 
 import javax.swing.*;
-
+import java.lang.reflect.Array;
 public class Matrix extends JFrame {
 	private int COLUMNAS;
 	private int FILAS;
 	private boolean isRandom;
-
+	ImageIcon fondo,obstaculo,robot_explorador,robot_recogedor,paquete;
 	public Matrix(int f,int c, boolean b) {
 		// TODO Auto-generated constructor stub
+		//Inicializa los atributos
 		FILAS = f;
 		COLUMNAS = c;
 		isRandom=b;
+		fondo = new ImageIcon("/Users/erikbv99421/Documents/workspace/p1-IA/Media/arena.png");
+		obstaculo = new ImageIcon("/Users/erikbv99421/Documents/workspace/p1-IA/Media/obstaculo.png");
+		robot_explorador = new ImageIcon("/Users/erikbv99421/Documents/workspace/p1-IA/Media/robot.png");
+		robot_recogedor = new ImageIcon("/Users/erikbv99421/Documents/workspace/p1-IA/Media/robot2.png");
+		paquete = new ImageIcon("/Users/erikbv99421/Documents/workspace/p1-IA/Media/paquete.png");
 
 		//creamos la matrix
 		if (isRandom == true) {
-			String porcentajeInput = JOptionPane.showInputDialog("Número de Obstaculos");
-			int porcentaje = Integer.parseInt(porcentajeInput);
-			getContentPane().setLayout(new GridLayout(FILAS,COLUMNAS));
-			ImageIcon aux,aux2,aux3;
-			Random aleatorio = new Random();
-			int vectorObstaculosI[] = new int[porcentaje];
-			int vectorObstaculosJ[] = new int[porcentaje];
-			int posicion;
-			for (int i = 0; i < porcentaje; i++) {
-				posicion=aleatorio.nextInt(FILAS);
-				vectorObstaculosI[i]=posicion;
-			}
-			for (int i = 0; i < porcentaje; i++) {
-				posicion=aleatorio.nextInt(COLUMNAS);
-				vectorObstaculosJ[i]=posicion;
-			}
-			aux=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/arena.png"); //fondo del mapa
-			aux2=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/obstaculo.png");	//obstaculo
-			aux3=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/robot.png");	//robot
-			//creamos el mapa
-			int k=0;
-			for (int i=0;i<FILAS;i++)
-				for (int j=0;j<COLUMNAS;j++)
-				{
-					if ((i==1)&&(j==3)) {
-						JLabel picRobot = new JLabel(aux3);
-						getContentPane().add(picRobot);
-					}
-					if ((vectorObstaculosI[k]==i)&&(vectorObstaculosJ[k]==j)) {
-						JLabel picbomba = new JLabel(aux2);
-						getContentPane().add(picbomba);
-						k++;
-					}
-					JLabel piclabel = new JLabel(aux);
-					getContentPane().add(piclabel);
-				}
-
+			
+			getContentPane().setLayout(new GridLayout(FILAS,COLUMNAS));	//crea la matriz
+			CargaElementos();
+			PedirPorcentaje();	//pide porcentaje y devuelve el numero de obstaculos
 			pack();
 			setVisible(true);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -61,20 +38,7 @@ public class Matrix extends JFrame {
 		} else {
 			//falta el manual
 			getContentPane().setLayout(new GridLayout(FILAS,COLUMNAS));
-			ImageIcon aux,aux2,aux3;
-			aux=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/arena.png"); //fondo del mapa
-			aux2=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/obstaculo.png");	//obstaculo
-			aux3=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/robot.png");	//robot
-			for (int i=0;i<FILAS;i++)
-				for (int j=0;j<COLUMNAS;j++)
-				{
-					if ((i==1)&&(j==3)) {
-						JLabel picRobot = new JLabel(aux3);
-						getContentPane().add(picRobot);
-					}
-					JLabel piclabel = new JLabel(aux);
-					getContentPane().add(piclabel);
-				}
+			CargaElementos();
 			ManejadorRaton manejador = new ManejadorRaton();
 			addMouseListener(manejador);
 			addMouseMotionListener(manejador);
@@ -85,19 +49,72 @@ public class Matrix extends JFrame {
 
 		}
 	}
+	private void CargaElementos() {
+		// TODO Auto-generated method stub
+		//creamos el mapa
+		for (int i=0;i<FILAS;i++)
+			for (int j=0;j<COLUMNAS;j++)
+			{
+				JLabel picFondo = new JLabel(fondo);
+				getContentPane().add(picFondo);
+			}
+	}
+	private void GenerarVector(int tamanyo) {
+		// TODO Auto-generated method stub
+		Vector<Integer> v = new Vector<Integer>(tamanyo);
+		int aux;
+		for (int i = 0; i < tamanyo; i++) {
+			aux=GeneraAleatorio(tamanyo());
+			v.insertElementAt(aux, i);
+		}
+		v.sort(null);
+		RellenarAleatorios(v);
+	}
+
+	private void RellenarAleatorios(Vector<Integer> v) {
+		// TODO Auto-generated method stub
+		
+		int	i = 0,k=0;
+		for (int filas = 0; filas < FILAS; filas++) {
+			k++;
+			for (int Columnas = 0; Columnas < COLUMNAS; Columnas++) {
+				if (v.get(i) == k) {
+					JLabel picbomba = new JLabel(obstaculo);
+					getContentPane().add(picbomba);
+					i++;
+				}
+				k++;
+			}
+		}
+	}
+	private int GeneraAleatorio(int precision) {
+		// TODO Auto-generated method stub
+		Random aleatorio = new Random();
+		int nAleatorio = aleatorio.nextInt(precision);
+		return nAleatorio;
+	}
+	private void PedirPorcentaje() {
+		// TODO Auto-generated method stub
+		String porcentajeInput = JOptionPane.showInputDialog("Porcentaje de Obstaculos");
+		int porcentaje = Integer.parseInt(porcentajeInput);
+		int total = tamanyo();
+		int nObstaculos = (porcentaje*tamanyo())/100;
+		GeneraAleatorio(nObstaculos);
+	}
+	
 	private class ManejadorRaton implements MouseListener,MouseMotionListener
 	{
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -115,21 +132,24 @@ public class Matrix extends JFrame {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
+	}
+	public int tamanyo() {
+		return FILAS*COLUMNAS;
 	}
 	public int getFilas() {
 		return FILAS;
@@ -154,9 +174,8 @@ public class Matrix extends JFrame {
 			for (int j=0;j<COLUMNAS;j++)
 			{
 				if ((i==X)&&(j==Y)) {
-					ImageIcon aux2=new ImageIcon("/Users/erikbv99421/Documents/workspace/Martian/Media/obstaculo.png");	//obstaculo
-					JLabel picbomba = new JLabel(aux2);
-					getContentPane().add(picbomba);
+					JLabel picObstaculo = new JLabel(obstaculo);
+					getContentPane().add(picObstaculo);
 				}
 			}
 	}
