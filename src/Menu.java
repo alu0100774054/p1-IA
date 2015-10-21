@@ -99,28 +99,19 @@ public class Menu extends JFrame {
         		.addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(LEADING)
                             .addComponent(filas)
-                            .addComponent(columnas)
-                            .addComponent(aceptaB))
+                            .addComponent(filas_tex)
+                            
+                            )
                     .addGroup(
                         layout.createParallelGroup(LEADING)
-                            .addComponent(filas_tex)
+                        .addComponent(columnas)
                             .addComponent(columnas_text)
+                            .addComponent(aceptaB)
                             .addComponent(cancelaB)
                            
                     
         		
-                /*.addComponent(filas)
-                .addComponent(columnas)
-                .addGroup(layout.createParallelGroup(LEADING)
-                    .addComponent(filas_tex)
-                    .addComponent(columnas_text)
-                    .addComponent(aceptaB)
-                    .addGroup(layout.createSequentialGroup()
-                        
-                        
-                .addGroup(layout.createParallelGroup(LEADING)
-                    
-                    .addComponent(cancelaB))*/
+             
             )));
                 
             layout.linkSize(SwingConstants.HORIZONTAL, aceptaB, cancelaB);
@@ -145,15 +136,7 @@ public class Menu extends JFrame {
                                 
             		
             		
-                    /*.addGroup(layout.createParallelGroup(BASELINE)
-                		.addComponent(filas)
-                        .addComponent(columnas)
-                        .addComponent(filas_tex)
-                        .addComponent(columnas_text)
-                        .addComponent(aceptaB))
-                    .addGroup(layout.createParallelGroup(BASELINE)
-                        
-                        .addComponent(cancelaB))*/
+                    
                 )));
             BoxLayout layoutMain = new BoxLayout(getContentPane(), BoxLayout.Y_AXIS);
             getContentPane().setLayout(layoutMain);
@@ -171,7 +154,21 @@ public class Menu extends JFrame {
 		Matrix matriz = new Matrix(i,j,b);
 		
 		JOptionPane.showMessageDialog(this, "Creada Matriz de " + matriz.getFilas() +" filas y " + matriz.getColumnas() + " columnas","Configuración inicial", JOptionPane.PLAIN_MESSAGE);*/
-		return null;
+            this.add(aceptaB);
+            aceptaB.addActionListener(
+    				new ActionListener() {
+    					
+    					@Override
+    					public void actionPerformed(ActionEvent e) {
+    						// TODO Auto-generated method stub
+    						int i = Integer.parseInt(filas_tex.getText());
+    						int j = Integer.parseInt(columnas_text.getText());
+    						Crear(i,j);
+    						
+    					}
+    				}
+    		);
+        return null;
 		
 	}
 	private ActionListener ConfiguracionManual() {
@@ -190,4 +187,13 @@ public class Menu extends JFrame {
 		return null;
 		
 	}	
+	
+	private ActionListener Crear(int i, int j){
+	    
+		boolean b=true;
+		Matrix matriz = new Matrix(i,j,b);
+	    return null;
+		
+	}
+	
 }
