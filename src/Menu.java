@@ -1,4 +1,7 @@
 import java.awt.*;
+import static javax.swing.GroupLayout.Alignment.BASELINE;
+import static javax.swing.GroupLayout.Alignment.CENTER;
+import static javax.swing.GroupLayout.Alignment.LEADING;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -75,7 +78,7 @@ public class Menu extends JFrame {
 	}
 	private ActionListener Configuracion() {
 		// TODO Auto-generated method stub
-		
+		JLabel titulo = new JLabel("Creacion Aleatoria");
 		JLabel filas = new JLabel("Numero de filas:");
 		JLabel columnas = new JLabel("Numero de columnas:");
 		JTextField filas_tex = new JTextField();
@@ -91,32 +94,69 @@ public class Menu extends JFrame {
         layout.setAutoCreateContainerGaps(true);
         
         layout.setHorizontalGroup(layout.createSequentialGroup()
-                .addComponent(filas)
+        		
+        		
+        		.addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(LEADING)
+                            .addComponent(filas)
+                            .addComponent(columnas)
+                            .addComponent(aceptaB))
+                    .addGroup(
+                        layout.createParallelGroup(LEADING)
+                            .addComponent(filas_tex)
+                            .addComponent(columnas_text)
+                            .addComponent(cancelaB)
+                           
+                    
+        		
+                /*.addComponent(filas)
                 .addComponent(columnas)
-                .addGroup(layout.createParallelGroup()
+                .addGroup(layout.createParallelGroup(LEADING)
                     .addComponent(filas_tex)
                     .addComponent(columnas_text)
+                    .addComponent(aceptaB)
                     .addGroup(layout.createSequentialGroup()
                         
                         
-                .addGroup(layout.createParallelGroup()
-                    .addComponent(aceptaB)
-                    .addComponent(cancelaB))
+                .addGroup(layout.createParallelGroup(LEADING)
+                    
+                    .addComponent(cancelaB))*/
             )));
                 
             layout.linkSize(SwingConstants.HORIZONTAL, aceptaB, cancelaB);
             
             layout.setVerticalGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup()
+            		
+            		
+  
+                    .addGroup(
+                            layout.createParallelGroup(LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(
+                                        layout.createParallelGroup(BASELINE)
+                                        .addComponent(filas)
+                                        .addComponent(columnas)
+                                        .addComponent(aceptaB))
+                                .addGroup(
+                                        layout.createParallelGroup(BASELINE)
+                                        .addComponent(filas_tex)
+                                        .addComponent(columnas_text)
+                                        .addComponent(cancelaB))
+                                
+            		
+            		
+                    /*.addGroup(layout.createParallelGroup(BASELINE)
                 		.addComponent(filas)
                         .addComponent(columnas)
                         .addComponent(filas_tex)
                         .addComponent(columnas_text)
                         .addComponent(aceptaB))
-                    .addGroup(layout.createParallelGroup()
+                    .addGroup(layout.createParallelGroup(BASELINE)
                         
-                        .addComponent(cancelaB))
-                );
+                        .addComponent(cancelaB))*/
+                )));
+            BoxLayout layoutMain = new BoxLayout(getContentPane(), BoxLayout.Y_AXIS);
+            getContentPane().setLayout(layoutMain);
      
             setTitle("Crear");
             pack();
