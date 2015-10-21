@@ -12,13 +12,16 @@ public class Matrix extends JFrame {
 	private int COLUMNAS;
 	private int FILAS;
 	private boolean isRandom;
+	private int PORCENTAJE;
 	ImageIcon fondo,obstaculo,robot_explorador,robot_recogedor,paquete;
-	public Matrix(int f,int c, boolean b) {
+	public Matrix(int f,int c, boolean b, int p) {
 		// TODO Auto-generated constructor stub
 		//Inicializa los atributos
 		FILAS = f;
 		COLUMNAS = c;
 		isRandom=b;
+		PORCENTAJE=p;
+
 		/*fondo = new ImageIcon("/Users/erikbv99421/Documents/workspace/p1-IA/Media/arena.png");
 		obstaculo = new ImageIcon("/Users/erikbv99421/Documents/workspace/p1-IA/Media/obstaculo.png");
 		robot_explorador = new ImageIcon("/Users/erikbv99421/Documents/workspace/p1-IA/Media/robot.png");
@@ -32,12 +35,14 @@ public class Matrix extends JFrame {
 		paquete = new ImageIcon("C:/Users/quino/workspace/p1-IA/Media/paquete.png");
 		
 
+	
+
 		//creamos la matrix
 		if (isRandom == true) {
 			
 			getContentPane().setLayout(new GridLayout(FILAS,COLUMNAS));	//crea la matriz
 			CargaElementos();
-			PedirPorcentaje();	//pide porcentaje y devuelve el numero de obstaculos
+			PedirPorcentaje(PORCENTAJE);	//pide porcentaje y devuelve el numero de obstaculos
 			pack();
 			setVisible(true);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -100,11 +105,11 @@ public class Matrix extends JFrame {
 		int nAleatorio = aleatorio.nextInt(precision);
 		return nAleatorio;
 	}
-	private void PedirPorcentaje() {
+	private void PedirPorcentaje(int p) {
 		// TODO Auto-generated method stub
-		String porcentajeInput = JOptionPane.showInputDialog("Porcentaje de Obstaculos");
-		int porcentaje = Integer.parseInt(porcentajeInput);
-		int nObstaculos = ((porcentaje*tamanyo())/100);
+		//String porcentajeInput = JOptionPane.showInputDialog("Porcentaje de Obstaculos");
+		
+		int nObstaculos = ((p*tamanyo())/100);
 		GenerarVector(nObstaculos);
 	}
 	

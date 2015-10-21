@@ -1,7 +1,9 @@
 import java.awt.*;
+
 import static javax.swing.GroupLayout.Alignment.BASELINE;
 import static javax.swing.GroupLayout.Alignment.CENTER;
 import static javax.swing.GroupLayout.Alignment.LEADING;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -57,10 +59,12 @@ public class Menu extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
+
 						si.setVisible(false);
 						no.setVisible(false);
 						Configuracion();
 						
+
 					}
 				}
 		);
@@ -71,16 +75,21 @@ public class Menu extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						ConfiguracionManual();
+						si.setVisible(false);
+						no.setVisible(false);
+						//ConfiguracionManual();
 					}
 				}
 		);
 	}
 	private ActionListener Configuracion() {
 		// TODO Auto-generated method stub
+
 		JLabel titulo = new JLabel("Creacion Aleatoria");
-		JLabel filas = new JLabel("Numero de filas:");
+		JLabel filas = new JLabel("Numero de Filas:");
+		JLabel porcen = new JLabel("Porcentaje de Obstaculos");
 		JLabel columnas = new JLabel("Numero de columnas:");
+		JTextField porcen_tex = new JTextField();
 		JTextField filas_tex = new JTextField();
 		JTextField columnas_text = new JTextField();
 		
@@ -94,8 +103,6 @@ public class Menu extends JFrame {
         layout.setAutoCreateContainerGaps(true);
         
         layout.setHorizontalGroup(layout.createSequentialGroup()
-        		
-        		
         		.addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(LEADING)
                             .addComponent(filas)
@@ -106,55 +113,41 @@ public class Menu extends JFrame {
                         layout.createParallelGroup(LEADING)
                         .addComponent(columnas)
                             .addComponent(columnas_text)
+                            .addComponent(porcen)
+                            .addComponent(porcen_tex)
                             .addComponent(aceptaB)
                             .addComponent(cancelaB)
-                           
-                    
-        		
-             
             )));
                 
             layout.linkSize(SwingConstants.HORIZONTAL, aceptaB, cancelaB);
             
             layout.setVerticalGroup(layout.createSequentialGroup()
-            		
-            		
-  
-                    .addGroup(
+            	 .addGroup(
                             layout.createParallelGroup(LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(
                                         layout.createParallelGroup(BASELINE)
                                         .addComponent(filas)
                                         .addComponent(columnas)
+                                        .addComponent(porcen)
                                         .addComponent(aceptaB))
                                 .addGroup(
                                         layout.createParallelGroup(BASELINE)
                                         .addComponent(filas_tex)
                                         .addComponent(columnas_text)
+                                        .addComponent(porcen_tex)
                                         .addComponent(cancelaB))
-                                
-            		
-            		
-                    
                 )));
             BoxLayout layoutMain = new BoxLayout(getContentPane(), BoxLayout.Y_AXIS);
+            getContentPane().setSize(400,400);
             getContentPane().setLayout(layoutMain);
-     
-            setTitle("Crear");
+                 
+            setTitle("Crear Mapa Aleatorio");
             pack();
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		/*tring inputFilas = JOptionPane.showInputDialog("Introduzca el número de filas");
-		String inputColumnas = JOptionPane.showInputDialog("Introduzca el número de columnas");
-		
-		int i = Integer.parseInt(inputFilas);
-		int j = Integer.parseInt(inputColumnas);
-		boolean b=true;
-		Matrix matriz = new Matrix(i,j,b);
-		
-		JOptionPane.showMessageDialog(this, "Creada Matriz de " + matriz.getFilas() +" filas y " + matriz.getColumnas() + " columnas","Configuración inicial", JOptionPane.PLAIN_MESSAGE);*/
             this.add(aceptaB);
+            
             aceptaB.addActionListener(
     				new ActionListener() {
     					
@@ -163,37 +156,86 @@ public class Menu extends JFrame {
     						// TODO Auto-generated method stub
     						int i = Integer.parseInt(filas_tex.getText());
     						int j = Integer.parseInt(columnas_text.getText());
-    						Crear(i,j);
+    						int p = Integer.parseInt(porcen_tex.getText());
+    						Crear(i,j,0,p);
+    						
+    					}
+    				}
+    				
+    		);
+            this.add(cancelaB);
+            cancelaB.addActionListener(
+    				new ActionListener() {
+    					
+    					@Override
+    					public void actionPerformed(ActionEvent e) {
+    						// TODO Auto-generated method stub
+    						
+    						//Crear
+    						new Menu();
+    						setSize(400,400);
+    						setVisible(true);
     						
     					}
     				}
     		);
-        return null;
+        
+
+		//JOptionPane.showMessageDialog(this, "Creada Matriz de " + matriz.getFilas() +" filas y " + matriz.getColumnas() + " columnas","Configuración inicial", JOptionPane.PLAIN_MESSAGE);
+		return null;
+
 		
 	}
-	private ActionListener ConfiguracionManual() {
+	/*private ActionListener ConfiguracionManual() {
 		// TODO Auto-generated method stub
 		
-		
-		String inputFilas = JOptionPane.showInputDialog("Introduzca el número de filas");
-		String inputColumnas = JOptionPane.showInputDialog("Introduzca el número de columnas");
-		
-		int i = Integer.parseInt(inputFilas);
-		int j = Integer.parseInt(inputColumnas);
-		boolean b=false;
-		Matrix matriz = new Matrix(i,j,b);
-		
-		JOptionPane.showMessageDialog(this, "Creada Matriz de " + matriz.getFilas() +" filas y " + matriz.getColumnas() + " columnas","Configuración inicial", JOptionPane.PLAIN_MESSAGE);
+
+		//MISMO QUE Configuracion();
+
+		this.add(aceptaB);
+
+		aceptaB.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int i = Integer.parseInt(filas_tex.getText());
+				int j = Integer.parseInt(columnas_text.getText());
+				Crear(i, j,1);
+
+			}
+		}
+
+		);
+		this.add(cancelaB);
+		cancelaB.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				// Crear
+				new Menu();
+				setSize(400, 400);
+				setVisible(true);
+
+			}
+		});
 		return null;
 		
 	}	
-	
-	private ActionListener Crear(int i, int j){
-	    
+*/
+	private ActionListener Crear(int i, int j, int tipo,int por){
+	    if(tipo==0){
+	    	boolean b=true;
+	    }else{
+	    	boolean b=false;
+	    }
 		boolean b=true;
-		Matrix matriz = new Matrix(i,j,b);
+		Matrix matriz = new Matrix(i,j,b,por);
 	    return null;
 		
 	}
 	
+
 }

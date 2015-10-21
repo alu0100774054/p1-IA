@@ -9,6 +9,7 @@ public class Interfaz extends JFrame {
 		Interfaz.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Interfaz.setSize(400,400);
 		Interfaz.setVisible(true);
+		
 	}
 
 }
